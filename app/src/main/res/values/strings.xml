@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Memory Game</string>
+
+    <string name="high_score">Best</string>
+    <string name="timer">Time</string>
+
+    <!-- yes the ground is made up of rocks -->
+    <string name="front_description"> the front side of the card </string>
+    <string name="back_description"> the back side of the card </string>
+</resources>
