@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background"
+    android:id="@+id/relative"
     tools:context=".Start">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/name"
-            android:layout_width="308dp"
-            android:layout_height="143dp"
-            android:src="@drawable/app_logo"
-            android:layout_marginTop="60dp"
-            android:layout_centerHorizontal="true" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_menu_logo_final">
 
         <LinearLayout
-            android:layout_marginTop="150dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/name">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <Button
+            <ImageView
                 android:id="@+id/play_game"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Play"
-                android:layout_gravity="center" />
+                android:layout_width="200dp"
+                android:layout_height="95dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/button_play" />
 
-            <Button
-                android:id="@+id/leaderboard"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Leaderboard"
-                android:layout_gravity="center" />
-
-
-            <Button
-                android:id="@+id/settings"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:layout_gravity="center" />
+            <ImageView
+                android:id="@+id/credits"
+                android:layout_width="200dp"
+                android:layout_height="95dp"
+                android:background="@drawable/button_credits" />
 
         </LinearLayout>
 
     </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>
