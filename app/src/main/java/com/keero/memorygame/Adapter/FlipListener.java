@@ -7,7 +7,7 @@ public class FlipListener implements ValueAnimator.AnimatorUpdateListener {
 
     private final View front;
     private final View back;
-    private boolean isFliped;
+    private boolean isFlipped;
 
     public FlipListener(final View front, final View back) {
         this.front = front;
@@ -25,27 +25,27 @@ public class FlipListener implements ValueAnimator.AnimatorUpdateListener {
             this.front.setRotationY(180 * value);
             this.front.setScaleX(scaleValue);
             this.front.setScaleY(scaleValue);
-            if(isFliped){
+            if(isFlipped){
                 setStateFlipped(false);
             }
         } else {
             this.back.setRotationY(-180 * (1f- value));
             this.back.setScaleX(scaleValue);
             this.back.setScaleY(scaleValue);
-            if(!isFliped){
+            if(!isFlipped){
                 setStateFlipped(true);
             }
         }
     }
 
     private void setStateFlipped(boolean flipped) {
-        isFliped = flipped;
+        isFlipped = flipped;
         this.front.setVisibility(flipped ? View.GONE : View.VISIBLE);
         this.back.setVisibility(flipped ? View.VISIBLE : View.GONE);
     }
 
     public boolean isFlipped(){
-        return isFliped;
+        return isFlipped;
     }
 
 }
