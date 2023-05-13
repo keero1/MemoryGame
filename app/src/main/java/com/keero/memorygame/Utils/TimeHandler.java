@@ -16,6 +16,8 @@ import com.keero.memorygame.Constants;
 import com.keero.memorygame.R;
 
 public class TimeHandler {
+    //timer
+    private CountDownTimer mainTimer, pauseTimer;
     private boolean isPaused;
     private boolean isCancelled;
     private long RemainingTime;
@@ -35,7 +37,7 @@ public class TimeHandler {
 
     // for difficulty
 
-    private boolean isHard;
+    private final boolean isHard;
 
     public TimeHandler(View view, Context context,FragmentManager fragmentManager,
                        SharedPreferences pref, int count, int bestScore, boolean isHard){
@@ -61,7 +63,7 @@ public class TimeHandler {
 
     private void startCountDown() {
 
-        new CountDownTimer(isHard ? Constants.HARD_TIMER : Constants.TIMER, Constants.TIMER_INTERVAL){
+        mainTimer = new CountDownTimer(isHard ? Constants.HARD_TIMER : Constants.TIMER, Constants.TIMER_INTERVAL){
             @Override
             public void onTick(long millisUntilFinished){
                 if(isPaused || isCancelled){
@@ -125,7 +127,7 @@ public class TimeHandler {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             isPaused = false;
-                            new CountDownTimer(RemainingTime, Constants.TIMER_INTERVAL) {
+                            pauseTimer = new CountDownTimer(RemainingTime, Constants.TIMER_INTERVAL) {
                                 @Override
                                 public void onTick(long millisUntilFinished){
                                     if(isPaused || isCancelled) {
@@ -155,6 +157,7 @@ public class TimeHandler {
                     });
                     pause.setNegativeButton("Quit", (dialog, which) -> {
                         isCancelled = true;
+
                         fragmentManager.popBackStack();
                     });
                     pause.show();
@@ -164,6 +167,12 @@ public class TimeHandler {
             }
         });
 
+    }
+
+    //countdown timer does not stop when I refresh the app (re-running and reapplying code)
+    public void stopTimer(){
+        if(pauseTimer != null) pauseTimer.cancel();
+        mainTimer.cancel();
     }
 
     public void setCount(int count){

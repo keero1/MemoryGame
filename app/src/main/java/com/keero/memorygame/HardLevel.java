@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.keero.memorygame.Adapter.HardModeAdapter;
-import com.keero.memorygame.Adapter.NormalModeAdapter;
 import com.keero.memorygame.Utils.ShuffleCards;
 import com.keero.memorygame.Utils.TimeHandler;
 import com.keero.memorygame.Utils.TouchListener;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 public class HardLevel extends Fragment {
 
     public ArrayList<Integer> cards;
+    TimeHandler timeHandler;
     public int[] CARDS = {
             R.drawable.card_1,
             R.drawable.card_2,
@@ -84,7 +84,7 @@ public class HardLevel extends Fragment {
         hardLevelRecyclerView.setAdapter(new HardModeAdapter(cards));
 
         // region Time handler
-        TimeHandler timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),
+        timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),
                 sharedPreferences, count, bestScore, true);
 
         // endregion
@@ -96,5 +96,11 @@ public class HardLevel extends Fragment {
         // endregion
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        timeHandler.stopTimer();
+        super.onDestroy();
     }
 }

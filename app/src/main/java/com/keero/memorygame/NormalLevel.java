@@ -18,10 +18,10 @@ import com.keero.memorygame.Utils.TimeHandler;
 import com.keero.memorygame.Utils.TouchListener;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class NormalLevel extends Fragment {
     public ArrayList<Integer> cards;
+    TimeHandler timeHandler;
     //images
     public int[] CARDS = {
             R.drawable.card_1,
@@ -67,10 +67,6 @@ public class NormalLevel extends Fragment {
         ShuffleCards shuffle = new ShuffleCards();
 
         shuffle.shuffleCards(CARDS, Constants.NO_OF_CARDS);
-        shuffle.shuffleCards(CARDS, Constants.NO_OF_CARDS);
-        shuffle.shuffleCards(CARDS, Constants.NO_OF_CARDS);
-
-        //shuffle it thrice
 
         for(int card : CARDS){
             cards.add(card);
@@ -80,7 +76,7 @@ public class NormalLevel extends Fragment {
         normalLevelRecyclerView.setAdapter(new NormalModeAdapter(cards));
 
         // region Time handler
-        TimeHandler timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),
+        timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),
                 sharedPreferences, count, bestScore, false);
 
         // endregion
@@ -93,5 +89,11 @@ public class NormalLevel extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onDestroy() {
+        timeHandler.stopTimer();
+        super.onDestroy();
     }
 }
