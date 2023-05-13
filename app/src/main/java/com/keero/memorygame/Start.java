@@ -1,26 +1,28 @@
 package com.keero.memorygame;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 
 public class Start extends Fragment {
 
     ImageView play_button, credits_button;
-    RelativeLayout layout;
+    Dialog dialog;
+    Button normal_button, hard_button;
     Animation scaleUp, scaleDown;
     public Start() {
         // Required empty public constructor
@@ -36,32 +38,31 @@ public class Start extends Fragment {
         play_button = rootView.findViewById(R.id.play_game);
         credits_button = rootView.findViewById(R.id.credits);
 
-        layout = rootView.findViewById(R.id.relative);
+        dialog = new Dialog(requireContext());
 
 
         scaleUp = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_down);
 
-
         play_button.setOnTouchListener((v, event) -> {
 
-            if(event.getAction() == MotionEvent.ACTION_UP) {
+            if(event.getAction() == MotionEvent.ACTION_UP)
                 play_button.startAnimation(scaleUp);
-                fragmentTransaction(new NormalLevel());
-            } else {
-                play_button.startAnimation(scaleDown);
 
-            }
+            play_button.startAnimation(scaleDown);
+
+            displayDialog();
+
             return true;
         });
 
         credits_button.setOnTouchListener((v, event) -> {
 
+            credits_button.startAnimation(scaleDown);
+
             if(event.getAction() == MotionEvent.ACTION_UP) {
                 credits_button.startAnimation(scaleUp);
                 fragmentTransaction(new Credits());
-            } else {
-                credits_button.startAnimation(scaleDown);
             }
 
             return true;
@@ -69,6 +70,29 @@ public class Start extends Fragment {
 
 
         return rootView;
+    }
+
+    //popup
+
+    private void displayDialog(){
+        dialog.setContentView(R.layout.difficulty_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        normal_button = dialog.findViewById(R.id.normal_mode);
+        hard_button = dialog.findViewById(R.id.hard_mode);
+
+        normal_button.setOnClickListener(v -> {
+            dialog.dismiss();
+
+            fragmentTransaction(new NormalLevel());
+        });
+
+        hard_button.setOnClickListener(v -> {
+            dialog.dismiss();
+
+            fragmentTransaction(new HardLevel());
+        });
     }
 
     // fragment

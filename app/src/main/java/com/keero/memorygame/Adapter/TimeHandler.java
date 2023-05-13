@@ -134,7 +134,11 @@ public class TimeHandler {
                                 }
                                 @Override
                                 public void onFinish() {
-                                    Toast.makeText(context, "no time", Toast.LENGTH_SHORT).show();
+                                    if(count < Constants.NO_OF_PAIRS) {
+                                        // lost
+                                        DialogueMaker("Game Over", "game over placeholder");
+
+                                    }
                                 }
 
                             }.start();

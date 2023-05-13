@@ -7,4 +7,6 @@
     <!-- yes the ground is made up of rocks -->
     <string name="front_description"> the front side of the card </string>
     <string name="back_description"> the back side of the card </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

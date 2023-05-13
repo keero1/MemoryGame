@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.view.View;
 
 public class FlipListener implements ValueAnimator.AnimatorUpdateListener {
-
     private final View front;
     private final View back;
     private boolean isFlipped;
@@ -21,7 +20,6 @@ public class FlipListener implements ValueAnimator.AnimatorUpdateListener {
         final float scaleValue = 0.625f + (1.5f * (value - 0.5f) * (value - 0.5f));
 
         if(value <= 0.5f){
-
             this.front.setRotationY(180 * value);
             this.front.setScaleX(scaleValue);
             this.front.setScaleY(scaleValue);

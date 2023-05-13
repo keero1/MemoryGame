@@ -38,9 +38,7 @@ public class NormalModeAdapter extends RecyclerView.Adapter<NormalModeAdapter.Vi
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-
         private final ImageView frontCard;
-
         public ViewHolder(View itemView) {
             super(itemView);
             frontCard = itemView.findViewById(R.id.cardFront);
