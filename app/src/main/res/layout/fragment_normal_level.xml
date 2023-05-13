@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,15 +27,16 @@
             android:layout_centerInParent="true"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="98dp"
-            android:src="@drawable/app_circle" />
+            android:layout_marginStart="98dp"
+            android:src="@drawable/app_circle"
+            android:contentDescription="@string/image_description" />
 
         <TextView
             android:id="@+id/high_score_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="0"
+            android:text="@string/default_value"
             android:textColor="@color/custom_yellow"
             android:textSize="30sp" />
 
@@ -54,7 +54,8 @@
             android:layout_height="120dp"
             android:layout_centerInParent="true"
             android:layout_marginStart="98dp"
-            android:src="@drawable/app_circle" />
+            android:src="@drawable/app_circle"
+            android:contentDescription="@string/image_description" />
 
         <TextView
             android:id="@+id/timer_text"
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/custom_yellow"
-            android:text="0:50"
+            android:text="@string/default_value"
             android:textSize="30sp" />
 
     </RelativeLayout>
@@ -81,18 +82,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_marginLeft="90dp"
+            android:layout_marginStart="90dp"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:text="@string/high_score" />
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="90dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="90dp"
             android:textSize="18sp"
-            android:text="@string/timer" />
+            android:text="@string/timer"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -100,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_below="@id/mid" />
 
 
