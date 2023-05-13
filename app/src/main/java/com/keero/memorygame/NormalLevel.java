@@ -3,18 +3,13 @@ package com.keero.memorygame;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.keero.memorygame.Adapter.FlipListener;
 import com.keero.memorygame.Adapter.NormalModeAdapter;
+import com.keero.memorygame.Adapter.TimeHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -54,11 +50,7 @@ public class NormalLevel extends Fragment {
 
 
     private ValueAnimator flip;
-    public long RemainingTime;
-    public boolean isPaused, isCancelled;
     int count, bestScore;
-    private SharedPreferences editablePreferences;
-    private SharedPreferences.Editor editor;
 
     public NormalLevel() {
         // Required empty public constructor
@@ -106,108 +98,15 @@ public class NormalLevel extends Fragment {
             cards.add(card);
         }
 
+        // adapter
         normalLevelRecyclerView.setAdapter(new NormalModeAdapter(cards));
 
-        isPaused = false;
-        isCancelled = false;
-
-        new CountDownTimer(Constants.TIMER, Constants.TIMER_INTERVAL){
-            @Override
-            public void onTick(long millisUntilFinished){
-                if(isPaused || isCancelled){
-                    cancel();
-                } else {
-                    ((TextView) view.findViewById(R.id.timer_text)).setText(String.valueOf(millisUntilFinished / Constants.TIMER_INTERVAL));
-                    RemainingTime = millisUntilFinished;
-
-                    if(count == Constants.NO_OF_PAIRS){
-                        long time = (Constants.TIMER - millisUntilFinished) / Constants.TIMER_INTERVAL;
-
-                        if(time < bestScore){
-                            editablePreferences = requireActivity().getSharedPreferences("HighScore", 0);
-                            editor = editablePreferences.edit();
-
-                            editor.putInt(Constants.USER_HIGH_KEY, (int) time).apply();
-
-                            DialogueMaker("New HighScore!", "high score placeholder");
-
-                        } else {
-                            DialogueMaker("You won!", "win placeholder");
-                        }
-
-                        //win
-
-                        cancel();
-                        this.onFinish();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if(count < Constants.NO_OF_PAIRS) {
-
-                    // lost
-                    DialogueMaker("Game Over", "game over placeholder");
-
-                }
-            }
-
-        }.start();
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                    isPaused = true;
-                    AlertDialog.Builder pause = new AlertDialog.Builder(getContext());
-                    pause.setTitle("Game Paused");
-                    pause.setCancelable(false);
-                    pause.setMessage("Quit?");
-                    pause.setPositiveButton("Resume", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            isPaused = false;
-                            new CountDownTimer(RemainingTime, Constants.TIMER_INTERVAL) {
-                                @Override
-                                public void onTick(long millisUntilFinished){
-                                    if(isPaused || isCancelled) {
-                                        cancel();
-                                    } else {
-                                        ((TextView) view.findViewById(R.id.timer_text)).setText(String.valueOf(millisUntilFinished / Constants.TIMER_INTERVAL));
-                                        RemainingTime = millisUntilFinished;
-
-                                        if(RemainingTime == 0){
-                                            this.onFinish();
-                                        }
-                                    }
-                                }
-                                @Override
-                                public void onFinish() {
-                                    Toast.makeText(getActivity(), "no time", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }.start();
+        // countdown
+        TimeHandler timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),
+                sharedPreferences, count, bestScore);
 
 
-                        }
-                    });
-                    pause.setNegativeButton("Quit", (dialog, which) -> {
-                        isCancelled = true;
-                        getParentFragmentManager().popBackStack();
-                    });
-                    pause.show();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        // buttons
-
+        //button handler
         normalLevelRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
@@ -237,7 +136,12 @@ public class NormalLevel extends Fragment {
                     secondChildPos = position;
 
                     //this is if it is the last card clicked, we will end it immediately
-                    if(count == 5) count += 1;
+                    if(count == 5)  {
+
+                        //we update it also in the handler
+                        count -=- 1;
+                        timeHandler.setCount(count);
+                    }
 
                     return true;
                 }
@@ -271,6 +175,9 @@ public class NormalLevel extends Fragment {
 
                     // once it hits 6 count ( theres 6 pairs ) it will be game over.
                     count -=- 1;
+
+                    // we update it also in the handler
+                    timeHandler.setCount(count);
 
 
                     return false;
@@ -312,14 +219,16 @@ public class NormalLevel extends Fragment {
 
         flip.setDuration(400);
 
-//        flip.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                super.onAnimationEnd(animation);
-//
-//
-//            }
-//        });
+        flip.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                //not needed
+
+
+            }
+        });
         flip.start();
 
     }
@@ -358,17 +267,4 @@ public class NormalLevel extends Fragment {
         flip.start();
 
     }
-
-    private void DialogueMaker(String title, String message){
-        AlertDialog.Builder dialogue = new AlertDialog.Builder(getContext());
-        dialogue.setTitle(title);
-        dialogue.setCancelable(false);
-        dialogue.setMessage(message);
-        dialogue.setNegativeButton("Quit", (dialog, which) -> {
-            isCancelled = true;
-            getParentFragmentManager().popBackStack();
-        });
-        dialogue.show();
-    }
-
 }
