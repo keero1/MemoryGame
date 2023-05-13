@@ -1,4 +1,4 @@
-package com.keero.memorygame.Adapter;
+package com.keero.memorygame.Utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,8 +33,12 @@ public class TimeHandler {
     private final int bestScore;
     private int count;
 
+    // for difficulty
+
+    private boolean isHard;
+
     public TimeHandler(View view, Context context,FragmentManager fragmentManager,
-                       SharedPreferences pref, int count, int bestScore){
+                       SharedPreferences pref, int count, int bestScore, boolean isHard){
 
         this.view = view;
         this.context = context;
@@ -45,16 +49,19 @@ public class TimeHandler {
         this.count = count;
         this.bestScore = bestScore;
 
+        this.isHard = isHard;
+
         startCountDown();
         setOnKeyListener();
 
     }
 
-    //TODO : add different difficulty and will not use the constant timer.
+
+    // im lazy rn so its ternary operator to change the value
 
     private void startCountDown() {
 
-        new CountDownTimer(Constants.TIMER, Constants.TIMER_INTERVAL){
+        new CountDownTimer(isHard ? Constants.HARD_TIMER : Constants.TIMER, Constants.TIMER_INTERVAL){
             @Override
             public void onTick(long millisUntilFinished){
                 if(isPaused || isCancelled){
@@ -63,14 +70,14 @@ public class TimeHandler {
                     ((TextView) view.findViewById(R.id.timer_text)).setText(String.valueOf(millisUntilFinished / Constants.TIMER_INTERVAL));
                     RemainingTime = millisUntilFinished;
 
-                    if(count == Constants.NO_OF_PAIRS){
-                        long time = (Constants.TIMER - millisUntilFinished) / Constants.TIMER_INTERVAL;
+                    if(count == (isHard ? Constants.HARD_NO_OF_PAIRS : Constants.NO_OF_PAIRS)){
+                        long time = ((isHard ? Constants.HARD_TIMER : Constants.TIMER) - millisUntilFinished) / Constants.TIMER_INTERVAL;
 
                         if(time < bestScore){
                             pref = context.getSharedPreferences("HighScore", 0);
                             editor = pref.edit();
 
-                            editor.putInt(Constants.USER_HIGH_KEY, (int) time).apply();
+                            editor.putInt(isHard ? Constants.USER_HARD_HIGH_KEY : Constants.USER_HIGH_KEY, (int) time).apply();
 
                             DialogueMaker("New HighScore!", "high score placeholder");
 
@@ -89,7 +96,7 @@ public class TimeHandler {
 
             @Override
             public void onFinish() {
-                if(count < Constants.NO_OF_PAIRS) {
+                if(count < (isHard ? Constants.HARD_NO_OF_PAIRS : Constants.NO_OF_PAIRS)) {
 
                     // lost
                     DialogueMaker("Game Over", "game over placeholder");
@@ -134,7 +141,7 @@ public class TimeHandler {
                                 }
                                 @Override
                                 public void onFinish() {
-                                    if(count < Constants.NO_OF_PAIRS) {
+                                    if(count < (isHard ? Constants.HARD_NO_OF_PAIRS : Constants.NO_OF_PAIRS)) {
                                         // lost
                                         DialogueMaker("Game Over", "game over placeholder");
 

@@ -1,4 +1,4 @@
-package com.keero.memorygame.Adapter;
+package com.keero.memorygame.Utils;
 
 import android.animation.ValueAnimator;
 import android.view.View;
