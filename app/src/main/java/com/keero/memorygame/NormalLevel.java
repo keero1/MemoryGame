@@ -101,12 +101,15 @@ public class NormalLevel extends Fragment {
         // adapter
         normalLevelRecyclerView.setAdapter(new NormalModeAdapter(cards));
 
-        // countdown
+        // region Time handler
+
         TimeHandler timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),
                 sharedPreferences, count, bestScore);
 
+        // endregion
 
-        //button handler
+
+        // region Click Listener
         normalLevelRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
@@ -203,6 +206,8 @@ public class NormalLevel extends Fragment {
                 // auto generated
             }
         });
+
+        // endregion
 
         return view;
 

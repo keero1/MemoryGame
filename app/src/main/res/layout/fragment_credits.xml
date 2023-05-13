@@ -3,13 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background"
     tools:context=".Credits">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="30sp"
-        android:text="soon" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/credit_logo_uncropped" >
+
+        <ImageView
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:background="@drawable/credit_members"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="88dp"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
