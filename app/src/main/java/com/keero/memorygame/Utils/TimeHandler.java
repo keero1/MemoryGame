@@ -8,8 +8,6 @@ import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.fragment.app.FragmentManager;
 
 import com.keero.memorygame.Constants;
@@ -81,10 +79,10 @@ public class TimeHandler {
 
                             editor.putInt(isHard ? Constants.USER_HARD_HIGH_KEY : Constants.USER_HIGH_KEY, (int) time).apply();
 
-                            DialogueMaker("New HighScore!", "high score placeholder");
+                            DialogueMaker("New HighScore", "Congratulations for setting a new high score");
 
                         } else {
-                            DialogueMaker("You won!", "win placeholder");
+                            DialogueMaker("You won", "You've matched all available pairs!");
                         }
 
                         //win
@@ -101,7 +99,7 @@ public class TimeHandler {
                 if(count < (isHard ? Constants.HARD_NO_OF_PAIRS : Constants.NO_OF_PAIRS)) {
 
                     // lost
-                    DialogueMaker("Game Over", "game over placeholder");
+                    DialogueMaker("Game Over", "You ran out of time! Better luck next time.");
 
                 }
             }
@@ -145,7 +143,7 @@ public class TimeHandler {
                                 public void onFinish() {
                                     if(count < (isHard ? Constants.HARD_NO_OF_PAIRS : Constants.NO_OF_PAIRS)) {
                                         // lost
-                                        DialogueMaker("Game Over", "game over placeholder");
+                                        DialogueMaker("Game Over", "You ran out of time! Better luck next time.");
 
                                     }
                                 }
@@ -173,6 +171,42 @@ public class TimeHandler {
     public void stopTimer(){
         if(pauseTimer != null) pauseTimer.cancel();
         mainTimer.cancel();
+    }
+
+    public void resumeTimer(){
+        isPaused = false;
+        pauseTimer = new CountDownTimer(RemainingTime, Constants.TIMER_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished){
+                if(isPaused || isCancelled) {
+                    cancel();
+                } else {
+                    ((TextView) view.findViewById(R.id.timer_text)).setText(String.valueOf(millisUntilFinished / Constants.TIMER_INTERVAL));
+                    RemainingTime = millisUntilFinished;
+
+                    if(RemainingTime == 0){
+                        this.onFinish();
+                    }
+                }
+            }
+            @Override
+            public void onFinish() {
+                if(count < (isHard ? Constants.HARD_NO_OF_PAIRS : Constants.NO_OF_PAIRS)) {
+                    // lost
+                    DialogueMaker("Game Over", "You ran out of time! Better luck next time.");
+
+                }
+            }
+
+        }.start();
+    }
+
+    public void setPause(boolean isPaused){
+        this.isPaused = isPaused;
+    }
+
+    public boolean isPaused(){
+        return isPaused;
     }
 
     public void setCount(int count){

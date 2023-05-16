@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background"
-    tools:context=".Credits">
+    tools:context=".Fragments.Credits">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,6 +12,7 @@
         android:background="@drawable/credit_logo_uncropped" >
 
         <ImageView
+            android:id="@+id/credits_box"
             android:layout_width="350dp"
             android:layout_height="350dp"
             android:background="@drawable/credit_members"

@@ -1,4 +1,4 @@
-package com.keero.memorygame;
+package com.keero.memorygame.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,11 +18,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.keero.memorygame.R;
+
 public class Start extends Fragment {
 
     ImageView play_button, credits_button;
     Dialog dialog;
-    Button normal_button, hard_button;
+    ImageView normal_button, hard_button;
     Animation scaleUp, scaleDown;
     public Start() {
         // Required empty public constructor

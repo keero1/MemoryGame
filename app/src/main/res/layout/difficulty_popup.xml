@@ -1,45 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="350dp"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
     android:layout_gravity="center">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/shadow_box"
-        android:layout_margin="50dp"
+        android:layout_height="600dp"
         android:gravity="center"
+        android:background="@drawable/dialog_bg"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DIFFICULTY"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textAlignment="center"/>
-
-        <Button
+        <ImageView
             android:id="@+id/normal_mode"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="95dp"
+            android:layout_marginBottom="26dp"
             android:gravity="center"
-            android:text="normal ?"/>
+            android:text="normal ?"
+            android:background="@drawable/easy_button"/>
 
-        <Button
+        <ImageView
             android:id="@+id/hard_mode"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="95dp"
             android:gravity="center"
-            android:text="hard ?"/>
-
-        <Button
-            android:id="@+id/high_score"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="high score?"/>
+            android:contentDescription="@string/image_description"
+            android:background="@drawable/hard_button"/>
     </LinearLayout>
 
 </RelativeLayout>

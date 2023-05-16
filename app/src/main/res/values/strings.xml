@@ -12,4 +12,6 @@
 
     <!-- default values -->
     <string name="default_value">30</string>
+
+    <string name="difficulty_text">DIFFICULTY</string>
 </resources>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background"
-    tools:context=".HardLevel">
+    tools:context=".Fragments.HardLevel">
 
     <RelativeLayout
         android:id="@+id/logo_layout"
