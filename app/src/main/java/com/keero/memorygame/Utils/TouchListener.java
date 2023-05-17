@@ -3,12 +3,14 @@ package com.keero.memorygame.Utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.keero.memorygame.Constants;
 import com.keero.memorygame.R;
 
 import java.util.ArrayList;
@@ -25,16 +27,19 @@ public class TouchListener implements RecyclerView.OnItemTouchListener {
     private int count;
     private ValueAnimator flip;
     private final ArrayList<Integer> cards;
-
     private final TimeHandler timeHandler;
+    private boolean isHard;
 
-    public TouchListener(ArrayList<Integer> cards, TimeHandler timeHandler){
+    public TouchListener(ArrayList<Integer> cards, TimeHandler timeHandler, boolean isHard){
         this.cards = cards;
         this.timeHandler = timeHandler;
+        this.isHard = isHard;
     }
 
     @Override
     public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+        Log.d("sad", ""+ count);
 
         //disable touch
         if(!isClickable) return false;
@@ -61,7 +66,7 @@ public class TouchListener implements RecyclerView.OnItemTouchListener {
             secondChildPos = position;
 
             //this is if it is the last card clicked, we will end it immediately
-            if(count == 5)  {
+            if(count == (isHard ? Constants.HARD_NO_OF_PAIRS - 1 : Constants.NO_OF_PAIRS - 1))  {
 
                 //we update it also in the handler
                 count -=- 1;

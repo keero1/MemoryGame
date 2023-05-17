@@ -96,7 +96,7 @@ public class HardLevel extends Fragment {
         // endregion
 
         // region Click Listener
-        TouchListener touchListener = new TouchListener(cards, timeHandler);
+        TouchListener touchListener = new TouchListener(cards, timeHandler, true);
         hardLevelRecyclerView.addOnItemTouchListener(touchListener);
 
         // endregion

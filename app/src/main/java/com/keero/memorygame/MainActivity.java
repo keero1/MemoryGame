@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
             exit.setTitle("Confirm exit app");
 
             exit.setPositiveButton("Yes", (dialog, which) -> finish());
-            exit.setNegativeButton("No", (dialog, which) -> Toast.makeText(MainActivity.this, "yo.", Toast.LENGTH_SHORT).show());
+            exit.setNegativeButton("No", (dialog, which) -> {
+                // zxc
+            });
 
             exit.show();
         }

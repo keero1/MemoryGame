@@ -84,7 +84,7 @@ public class NormalLevel extends Fragment {
         // endregion
 
         // region Click Listener
-        TouchListener touchListener = new TouchListener(cards, timeHandler);
+        TouchListener touchListener = new TouchListener(cards, timeHandler, false);
         normalLevelRecyclerView.addOnItemTouchListener(touchListener);
 
         // endregion
