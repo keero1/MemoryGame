@@ -1,5 +1,9 @@
 package com.keero.memorygame.Adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.keero.memorygame.R;
+import com.keero.memorygame.Utils.FlipListener;
 
 import java.util.ArrayList;
 
 public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     private final ArrayList<Integer> frontCard_Array;
     private boolean isHard;
+    private ValueAnimator flip;
     public ViewAdapter(ArrayList<Integer> front_array, boolean isHard) {
         this.frontCard_Array = front_array;
         this.isHard = isHard;
@@ -31,6 +37,17 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.frontCard.setImageResource(frontCard_Array.get(position));
+
+        new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished){
+                // zxc
+            }
+
+            public void onFinish(){
+                Flip(holder.itemView);
+            }
+
+        }.start();
     }
 
     @Override
@@ -45,6 +62,28 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
             super(itemView);
             frontCard = itemView.findViewById(R.id.cardFront);
         }
+    }
+
+    private void Flip(final View view){
+
+        if(view == null) return;
+
+        FlipListener flipListener = new FlipListener(view.findViewById(R.id.cardFront), view.findViewById(R.id.cardBack));
+
+        flip = ValueAnimator.ofFloat(0f, 1f);
+        flip.addUpdateListener(flipListener);
+
+        flip.setDuration(400);
+
+        flip.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                //not needed
+            }
+        });
+        flip.start();
+
     }
 
 

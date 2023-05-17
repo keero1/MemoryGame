@@ -8,15 +8,15 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/card_1"
-        android:contentDescription="@string/front_description"
-        android:id="@+id/cardFront"/>
+        android:src="@drawable/card_box"
+        android:contentDescription="@string/back_description"
+        android:id="@+id/cardBack"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/card_box"
-        android:contentDescription="@string/back_description"
-        android:id="@+id/cardBack"/>
+        android:src="@drawable/card_1"
+        android:contentDescription="@string/front_description"
+        android:id="@+id/cardFront"/>
 
 </RelativeLayout>
