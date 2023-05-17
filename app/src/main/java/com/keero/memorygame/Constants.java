@@ -13,6 +13,6 @@ public class Constants {
     // hard
     public static final String USER_HARD_HIGH_KEY = "user_hard_high";
     public static final long HARD_TIMER = 46000;
-    public static final int HARD_NO_OF_CARDS = 16;
-    public static final int HARD_NO_OF_PAIRS = 8;
+    public static final int HARD_NO_OF_CARDS = 20;
+    public static final int HARD_NO_OF_PAIRS = 10;
 }
