@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 public class Settings extends Fragment {
 
+    // todo : make is possible to modify the values within the app
+
     public Settings() {
         // Required empty public constructor
     }
