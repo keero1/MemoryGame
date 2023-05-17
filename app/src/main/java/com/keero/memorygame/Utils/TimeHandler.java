@@ -8,9 +8,13 @@ import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.keero.memorygame.Constants;
+import com.keero.memorygame.Fragments.HardLevel;
+import com.keero.memorygame.Fragments.NormalLevel;
 import com.keero.memorygame.R;
 
 public class TimeHandler {
@@ -220,6 +224,15 @@ public class TimeHandler {
         dialogue.setTitle(title);
         dialogue.setCancelable(false);
         dialogue.setMessage(message);
+
+        dialogue.setPositiveButton("Retry", (dialog, which) -> {
+
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.layoutFragment, isHard ? new HardLevel() : new NormalLevel());
+            transaction.commit();
+
+        });
+
         dialogue.setNegativeButton("Quit", (dialog, which) -> {
             isCancelled = true;
             fragmentManager.popBackStack();
