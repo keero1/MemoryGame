@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     private final ArrayList<Integer> frontCard_Array;
-    private boolean isHard;
-    private ValueAnimator flip;
+    private final boolean isHard;
+
     public ViewAdapter(ArrayList<Integer> front_array, boolean isHard) {
         this.frontCard_Array = front_array;
         this.isHard = isHard;
@@ -29,7 +29,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate( isHard ? R.layout.card_hard : R.layout.card,parent,false);
         view.setMinimumWidth(parent.getMeasuredWidth() / (isHard ? 4 : 3));
         return new ViewHolder(view);
     }
@@ -38,13 +38,16 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.frontCard.setImageResource(frontCard_Array.get(position));
 
-        new CountDownTimer(1000, 1000) {
+        holder.itemView.setEnabled(false);
+
+        new CountDownTimer(600, 1000) {
             public void onTick(long millisUntilFinished){
                 // zxc
             }
 
             public void onFinish(){
                 Flip(holder.itemView);
+
             }
 
         }.start();
@@ -70,7 +73,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
 
         FlipListener flipListener = new FlipListener(view.findViewById(R.id.cardFront), view.findViewById(R.id.cardBack));
 
-        flip = ValueAnimator.ofFloat(0f, 1f);
+        ValueAnimator flip = ValueAnimator.ofFloat(0f, 1f);
         flip.addUpdateListener(flipListener);
 
         flip.setDuration(400);
@@ -79,7 +82,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                //not needed
+                view.setEnabled(true);
             }
         });
         flip.start();

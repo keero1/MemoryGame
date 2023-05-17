@@ -15,11 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.keero.memorygame.R;
 
+// no blind people gonna use this anyway so Im just gonna silence the warning :)))
+@SuppressLint("ClickableViewAccessibility")
 public class Start extends Fragment {
 
     ImageView play_button, credits_button;
@@ -30,8 +31,6 @@ public class Start extends Fragment {
         // Required empty public constructor
     }
 
-    // no blind people gonna use this anyway so Im just gonna silence the warning :)))
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,16 +83,32 @@ public class Start extends Fragment {
         normal_button = dialog.findViewById(R.id.normal_mode);
         hard_button = dialog.findViewById(R.id.hard_mode);
 
-        normal_button.setOnClickListener(v -> {
-            dialog.dismiss();
+        normal_button.setOnTouchListener((v, event) -> {
+            normal_button.startAnimation(scaleDown);
 
-            fragmentTransaction(new NormalLevel());
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                normal_button.startAnimation(scaleUp);
+
+                fragmentTransaction(new NormalLevel());
+
+                dialog.dismiss();
+            }
+
+            return true;
         });
 
-        hard_button.setOnClickListener(v -> {
-            dialog.dismiss();
+        hard_button.setOnTouchListener((v, event) -> {
+            hard_button.startAnimation(scaleDown);
 
-            fragmentTransaction(new HardLevel());
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                hard_button.startAnimation(scaleUp);
+
+                fragmentTransaction(new HardLevel());
+
+                dialog.dismiss();
+            }
+
+            return true;
         });
     }
 
