@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.keero.memorygame.Adapter.NormalModeAdapter;
+import com.keero.memorygame.Adapter.ViewAdapter;
 import com.keero.memorygame.Constants;
 import com.keero.memorygame.R;
 import com.keero.memorygame.Utils.ShuffleCards;
@@ -75,7 +75,7 @@ public class NormalLevel extends Fragment {
         }
 
         // adapter
-        normalLevelRecyclerView.setAdapter(new NormalModeAdapter(cards));
+        normalLevelRecyclerView.setAdapter(new ViewAdapter(cards, false));
 
         // region Time handler
         timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),

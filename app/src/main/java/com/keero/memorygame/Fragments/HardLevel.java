@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.keero.memorygame.Adapter.HardModeAdapter;
+import com.keero.memorygame.Adapter.ViewAdapter;
 import com.keero.memorygame.Constants;
 import com.keero.memorygame.R;
 import com.keero.memorygame.Utils.ShuffleCards;
@@ -87,7 +87,7 @@ public class HardLevel extends Fragment {
         }
 
         // adapter
-        hardLevelRecyclerView.setAdapter(new HardModeAdapter(cards));
+        hardLevelRecyclerView.setAdapter(new ViewAdapter(cards, true));
 
         // region Time handler
         timeHandler = new TimeHandler(view, requireContext(), getParentFragmentManager(),

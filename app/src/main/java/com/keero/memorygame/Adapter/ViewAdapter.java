@@ -12,17 +12,19 @@ import com.keero.memorygame.R;
 
 import java.util.ArrayList;
 
-public class NormalModeAdapter extends RecyclerView.Adapter<NormalModeAdapter.ViewHolder> {
+public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     private final ArrayList<Integer> frontCard_Array;
-    public NormalModeAdapter(ArrayList<Integer> front_array) {
+    private boolean isHard;
+    public ViewAdapter(ArrayList<Integer> front_array, boolean isHard) {
         this.frontCard_Array = front_array;
+        this.isHard = isHard;
     }
 
     @NonNull
     @Override
-    public NormalModeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card,parent,false);
-        view.setMinimumWidth(parent.getMeasuredWidth() / 3);
+        view.setMinimumWidth(parent.getMeasuredWidth() / (isHard ? 4 : 3));
         return new ViewHolder(view);
     }
 
