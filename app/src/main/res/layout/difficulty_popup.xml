@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="300dp"
     android:layout_gravity="center">
@@ -9,7 +10,8 @@
         android:layout_height="600dp"
         android:gravity="center"
         android:background="@drawable/dialog_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/normal_mode"
@@ -17,7 +19,7 @@
             android:layout_height="95dp"
             android:layout_marginBottom="26dp"
             android:gravity="center"
-            android:text="normal ?"
+            android:contentDescription="@string/image_description"
             android:background="@drawable/easy_button"/>
 
         <ImageView
